@@ -1,0 +1,59 @@
+To set up a Git repository that exceeds 100MB, you can use Git Large File Storage (LFS). Here’s how to do it step-by-step:
+
+### Step-by-Step Guide to Setup Git with Large Files
+
+1. **Install Git LFS**:
+   - Depending on your operating system, follow the installation guide on the [Git LFS website](https://git-lfs.github.com/).
+   - For example, use:
+     ```bash
+     # For Debian-based systems
+     sudo apt install git-lfs
+     ```
+
+2. **Initialize Git LFS for Your Repository**:
+   - Navigate to your repository folder:
+     ```bash
+     cd path/to/your/repo
+     ```
+   - Initialize Git LFS:
+     ```bash
+     git lfs install
+     ```
+
+3. **Track Large Files**:
+   - Specify the types of files you want to manage with Git LFS, such as:
+     ```bash
+     git lfs track "*.psd"  # For example, for Photoshop files.
+     ```
+   - This creates or updates a `.gitattributes` file in your repository.
+
+4. **Add Your Files**:
+   - Add the files you want to your Git repository:
+     ```bash
+     git add .
+     ```
+
+5. **Commit Your Changes**:
+   - Commit the changes (including the `.gitattributes` file):
+     ```bash
+     git commit -m "Add files using Git LFS"
+     ```
+
+6. **Push to Your Remote Repository**:
+   - Finally, push your changes to the remote repository:
+     ```bash
+     git push origin main
+     ```
+
+### Important Considerations
+
+- **File Limits**: Note that while Git LFS allows you to manage large files, GitHub has storage limits for LFS files (1GB total storage per account and 1GB per file). You can review these limits on GitHub.
+  
+- **Collaboration**: Other collaborators will also need to have Git LFS installed to correctly manage and push large files.
+
+- **Verify Setup**: After completing the above steps, verify that your large files are tracked by Git LFS by running:
+  ```bash
+  git lfs ls-files
+  ```
+
+This will list the files managed by Git LFS in your repository. Let me know if you need any further assistance!
