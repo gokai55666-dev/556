@@ -91,8 +91,110 @@ This will list the files managed by Git LFS in your repository. So maybe look he
 
 If you can provide me with specific steps or content from the text in that link, I can help you with the setup more accurately!      
 
+Here’s a simpler walkthrough of what Git LFS is *and* what to do with that `.tar.gz` you downloaded — including for using it inside Termux on Android.
 
+---
 
+## What is Git LFS
+
+- **“Git Large File Storage”**: A Git extension for managing large files (audio, video, datasets, etc.). Instead of storing those big files *inside* the Git repo, Git LFS replaces them with *pointers*. The actual file content is stored separately, so Git remains fast and efficient. ([git-lfs.com](https://git-lfs.com/))  
+- Works with services like GitHub, GitLab, Bitbucket, etc. ([atlassian.com](https://www.atlassian.com/git/tutorials/git-lfs?utm_source=openai))
+
+---
+
+## You downloaded `git-lfs-linux-amd64-v3.7.1.tar.gz` — now what?
+
+This is a **prebuilt (binary) version** of Git LFS for Linux machines with AMD64 (x86_64) architecture. If you're using a typical PC with Linux, great. If you're running this inside Termux (Android), things are a bit different (I'll cover that later).
+
+Here’s how you install & use it:
+
+---
+
+## Installation steps on a standard Linux PC
+
+1. Open the terminal.
+
+2. Navigate to where you downloaded the file, e.g.,  
+   ```
+   cd ~/Downloads
+   ```
+
+3. Extract it:
+   ```
+   tar -xf git-lfs-linux-amd64-v3.7.1.tar.gz
+   ```
+   This will unpack the archive into a folder like `git-lfs-3.7.1/` or similar. ([open-terrain.org](https://open-terrain.org/index.php/Tutorials/GitLFS?utm_source=openai))
+
+4. Go into that folder:
+   ```
+   cd git-lfs-3.7.1
+   ```
+
+5. Make sure the install script has permission:
+   ```
+   chmod +x install.sh
+   ```
+
+6. Run the install script. This likely needs `sudo`:
+   ```
+   sudo ./install.sh
+   ```
+   This moves the Git LFS binary into a system folder (e.g. `/usr/local/bin`), sets up necessary files, modifies Git config for LFS functionality. ([github.com](https://github.com/git-lfs/git-lfs?utm_source=openai))
+
+7. Once installed, you must **initialize** Git LFS for your user:
+   ```
+   git lfs install
+   ```
+   This sets up hooks (so Git knows about LFS when you commit/push). You do this once per user account. ([github-wiki-see.page](https://github-wiki-see.page/m/git-lfs/git-lfs/wiki/Installation?utm_source=openai))
+
+8. Use it in Git repos:
+   - Inside a repo → tell Git LFS which file patterns to track. For example:
+     ```
+     git lfs track "*.psd"
+     ```
+   - Stage & commit the `.gitattributes` that Git LFS created:
+     ```
+     git add .gitattributes
+     git commit -m "Track PSD files with LFS"
+     ```
+   - Then commit & push your large files normally; Git LFS handles their storage. ([git-lfs.com](https://git-lfs.com/))
+
+---
+
+## Using Git LFS *in Termux* (on Android)
+
+Termux is a special environment; not all Linux things work exactly the same. Some things to know:
+
+- If the binary you downloaded is compiled for standard Linux x86_64, it **won’t work** in Termux unless your phone is x86_64 and supports running that binary. Most phones are **ARM-based**, so the architecture doesn’t match.
+
+- If you try, you'll likely get errors like *“Invalid ELF”* or *“cannot execute binary”*.
+
+---
+
+### What *you* should do in Termux
+
+1. **Install Git & maybe Git LFS via package manager** (if available):
+   ```
+   pkg install git
+   pkg search git-lfs
+   ```
+   If `git-lfs` is in the Termux repository, install it with `pkg install git-lfs`.
+
+2. If not available, you may try to compile from source *for ARM*, but that’s more involved (needs `go` toolchain, etc.).
+
+3. **Never use the x86_64 Linux binary** in most Termux setups because of architecture mismatch.
+
+4. Once you have Git + Git LFS working (either via package or compiled), same steps apply: `git lfs install`, `git lfs track ...`, etc.
+
+---
+
+## TL;DR
+
+- The `.tar.gz` file you have is good for **installing Git LFS on a Linux PC**.
+- Extract → `./install.sh` → `git lfs install` → use it in your repos by tracking file types.
+- If you're using **Termux**, the binary might **not work** unless it's built for ARM. Better to find a version/package for Termux or build it yourself.
+
+---
 
 
 basically I want :
