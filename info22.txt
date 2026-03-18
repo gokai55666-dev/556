@@ -1,0 +1,129 @@
+Here’s how you can analyze the usability of the current folder-based `.md` / `.txt` files and then use that to build a prompt that helps generate your AI workflow “as intended.”  
+
+---
+
+## 1. What I’ll Research / Analyze  
+To understand how to structure your workflow system well, I’ll focus on:
+
+- Best practices in **document + prompt management**, especially using `.md` or `.txt` files.  
+- Existing workflows that use file/folder structures to provide context / “memory” for AIs.  
+- Prompt engineering methods for extracting content and building workflows from those files.  
+
+---
+
+## 2. Key Findings from Sources
+
+Here are usability patterns and lessons gleaned from recent tools, studies, and community practices:
+
+| Feature / Practice | Why It Matters | Examples |
+|---|---|---|
+| **Context files as startup state** | AI starts with understanding your project from `.md` files—reduces repeated explanation, fewer hallucinations. | Reddit user: “kept a few short Markdown (`.md`) files that the AI can read when a conversation starts … made AI more reliable.” ([reddit.com](https://www.reddit.com/r/PromptEngineering/comments/1nke8kh?utm_source=openai)) |
+| **Workflow engine via `.md` or `SKILL.md` files** | Pipelines defined in human-readable text, parsed by agents. Easier to update, version, review. | Workflow defined as `SKILL.md` files for “scan Reddit → classify → create PR.” Claude Code interprets it. ([reddit.com](https://www.reddit.com/r/ClaudeAI/comments/1rpwv5h/our_workflow_engine_is_a_markdown_file_written_in/?utm_source=openai)) |
+| **Modular file structure** | Breaking workflow into small files (modules) helps versioning, collaboration, debugging. | The Markdown OS Playbook uses `.md` files in folders as your company’s “brain”—strategy, guardrails, etc. ([gist.github.com](https://gist.github.com/gracey-yk/e3e7fc69be68bcaf709e183da78fb76b?utm_source=openai)) |
+| **Prompt engineering best practices** | Clarity, specificity, examples, constraints, structure improves prompt quality significantly. | TechTarget’s best practices: structure, avoid ambiguity, specify output format. ([techtarget.com](https://www.techtarget.com/searchenterpriseai/tip/Prompt-engineering-tips-and-best-practices?utm_source=openai)) <br> PromptManage: A/B test prompts, track metrics, version control. ([promptmanage.com](https://promptmanage.com/en/docs/best-practices?utm_source=openai)) |
+| **Responsibility and grounding** | Ensuring content in `.md/.txt` files is accurate, cited; prompt steps that reinforce verification. | Best practices: grounding in real data, asking for sources, human in loop. ([powertofly.com](https://powertofly.com/up/mastering-prompt-engineering?utm_source=openai)) |
+
+---
+
+## 3. What to Do with Your `.md` / `.txt` Folders
+
+To leverage your recent attempts (folders of `.md` and `.txt` files), the following usability-oriented setup helps:
+
+1. **Project context folder**  
+   Keep a root folder with short files like `project_description.md`, `constraints.md`, `guidelines.md`. These are read by the AI at session start.
+
+2. **Workflow definition files**  
+   Use individual `.md` files mapping to tasks or “skills” (e.g. `SKILL.md` in subfolders), each describing what needs to happen (action, input, output).
+
+3. **Versioning / change log**  
+   A file like `changelog.txt` or `versions.md` documenting what changed when and why — aids prompt tuning and traceability.
+
+4. **Prompt library**  
+   Folder of prompt templates: each has name, purpose, example input/output, constraints; e.g. `prompt_templates/generate_summary.md`.
+
+5. **Task examples / negative examples**  
+   Include good outputs and “what not to do” examples to constrain and guide the AI behavior.
+
+---
+
+## 4. Usability Considerations
+
+- **Readability:** files are short, plain, structured (headings, bullet lists).  
+- **Discoverability:** predictable folder structure and naming; documentation to explain what folder is used for what.  
+- **Modifiability:** easy to update files without breaking workflows / agents.  
+- **Traceability:** every prompt version linked with examples and outcomes (so you can see what works).  
+
+---
+
+## 5. Prompt You Can Use to Build the Workflow “As Intended”
+
+Here’s a refined prompt you can use with an LLM to generate or refine your AI workflow system, based on your `.md` / `.txt` folder setup. You should run this once you have your folders in place.
+
+---
+
+### Workflow-Building Prompt
+
+```
+# Context
+I have a project folder structured with multiple `.md` and `.txt` files.  
+These include:
+- `project_description.md`
+- `constraints.md`
+- A `skills/` folder containing `SKILL.md` files defining tasks or actions
+- A `prompt_templates/` folder with prompt templates, good & bad examples
+- A `changelog.md` or `versions.txt` for version tracking
+
+# Task
+Help me produce a fully specified AI workflow architecture and implementation plan that uses these files. The AI should use them to:
+
+1. Load context at session start  
+2. Interpret the `skills` folder tasks into executable actions  
+3. Use prompt templates for each task  
+4. Enforce constraints and guidelines from `constraints.md`  
+5. Record changes in versioning / changelog
+
+# Requirements / Constraints:
+
+- Use modular tasks: each SKILL.md defines a self-contained unit with input, output, dependencies  
+- Ensure each prompt template includes: purpose, example, input format, output format, tone/style constraints  
+- Provide mechanism to validate outputs against constraints and “what not to do” examples  
+- Design a version control or change-logging workflow: how updates get reviewed, tracked, applied  
+- Suggested file/folder naming conventions  
+- Include suggestions for automations (e.g. hooks, startup reads, agent interactions)
+
+# Output format
+
+Provide output with these sections:
+
+## Workflow Architecture  
+Explain the components (context loader, task executor, prompt template manager, constraint enforcer, version tracker), and how they interact.
+
+## File Structure Example  
+List a sample folder structure with file names and their purpose.
+
+## Template SKILL.md format  
+Provide a skeleton SKILL.md file with sections and metadata.
+
+## Template prompt template format  
+Provide a skeleton template file for prompt templates including examples and constraints.
+
+## Governance & Versioning Plan  
+Explain how the system will evolve safely with version control, review steps, and tracking.
+
+## Implementation Steps  
+Step by step plan to build this workflow system from your current folder setup.
+
+```
+
+---
+
+## 6. How to Use This Prompt Effectively
+
+- Run the prompt with the AI model you’ll use for the workflow (e.g. Claude Code or GPT-4).  
+- Attach or give access to a sample of your existing files (or their contents) so the AI sees the exact structure.  
+- After getting a draft, iterate: test tasks, see where outputs deviate, refine constraints.  
+- Use version control (Git or similar) so you can rollback if something breaks.
+
+---
+
+If you want, I can tailor that prompt even more to match the exact structure of your recent `.md`/`.txt` folder — if you share a list of those files/subfolders. Want me to adjust it that way?
